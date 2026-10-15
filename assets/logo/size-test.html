@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>小尺寸可辨识度检查</title>
+<style>
+  body { margin: 0; background: #f4f3ee; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .wrap { padding: 26px 30px; }
+  h2 { font-size: 13px; letter-spacing: 2px; color: #b1502f; text-transform: uppercase;
+       margin: 0 0 14px; font-weight: 600; }
+  .row { display: flex; align-items: flex-end; gap: 26px; margin-bottom: 26px; }
+  .cell { text-align: center; }
+  .cell img { display: block; image-rendering: auto; }
+  .cell span { display: block; margin-top: 8px; font-size: 10px; color: #8a847a;
+               font-family: ui-monospace, Consolas, monospace; }
+  .dark { background: #191817; padding: 18px 20px; border-radius: 8px; }
+  .dark h2 { color: #e8a184; }
+  .dark .cell span { color: #8a847a; }
+  .note { font-size: 12.5px; color: #5a554e; line-height: 1.8; margin: 0 0 22px; max-width: 76ch; }
+  .note code { background: #e7e5dc; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="note">
+    左边是 <code>favicon.svg</code>（tab 图标专用，字形放大到几乎满格），右边是 <code>mark-b.svg</code>（页面徽标）。
+    判据：<b>16px 下要能看出一撇一捺，不能糊成一团</b>。
+  </p>
+
+  <h2>站点图标 favicon.svg</h2>
+  <div class="row">
+    <div class="cell"><img src="favicon.svg" width="64" height="64" alt=""><span>64</span></div>
+    <div class="cell"><img src="favicon.svg" width="32" height="32" alt=""><span>32</span></div>
+    <div class="cell"><img src="favicon.svg" width="24" height="24" alt=""><span>24</span></div>
+    <div class="cell"><img src="favicon.svg" width="20" height="20" alt=""><span>20</span></div>
+    <div class="cell"><img src="favicon.svg" width="16" height="16" alt=""><span>16</span></div>
+  </div>
+
+  <h2>页面徽标 mark-b.svg</h2>
+  <div class="row">
+    <div class="cell"><img src="mark-b.svg" width="120" height="120" alt=""><span>120</span></div>
+    <div class="cell"><img src="mark-b.svg" width="64" height="64" alt=""><span>64</span></div>
+    <div class="cell"><img src="mark-b.svg" width="40" height="40" alt=""><span>40</span></div>
+    <div class="cell"><img src="mark-b.svg" width="32" height="32" alt=""><span>32</span></div>
+    <div class="cell"><img src="mark-b.svg" width="24" height="24" alt=""><span>24</span></div>
+    <div class="cell"><img src="mark-b.svg" width="16" height="16" alt=""><span>16</span></div>
+  </div>
+
+  <div class="dark">
+    <h2>深色底（放大会/深色主题）</h2>
+    <div class="row" style="margin-bottom:0">
+      <div class="cell"><img src="favicon.svg" width="40" height="40" alt=""><span>40</span></div>
+      <div class="cell"><img src="mark-b.svg" width="40" height="40" alt=""><span>40</span></div>
+      <div class="cell"><img src="mark-b.svg" width="28" height="28" alt=""><span>28</span></div>
+      <div class="cell"><img src="favicon.svg" width="20" height="20" alt=""><span>20</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

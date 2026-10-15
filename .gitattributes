@@ -1,13 +1,15 @@
-# 单文件成品是打包产物（由 tools/build.js 从 src/ 生成），
-# 标记为 generated 以免撑起语言统计、也不要在 diff 里展开
-人文组.html            linguist-generated=true -diff
-build/*.html           linguist-generated=true -diff
+# 发布用的 HTML 是单文件产物，必须与本地验证过的字节完全一致。
+# 声明为 binary（-text）可关掉行尾自动转换 —— 否则 Git 会把 CRLF 换成 LF，
+# 仓库里的文件就和本地测过的不是同一份了。
+# 同时标记 generated，避免撑起语言统计、也不要在 diff 里展开。
+*.html                 -text linguist-generated=true -diff
 
 # 图片按二进制处理
 *.png binary
 *.jpg binary
+*.svg text eol=lf
 
-# 统一换行，避免 Windows / macOS 协作时整文件 diff
+# 其余文本文件统一换行，避免 Windows / macOS 协作时整文件 diff
 * text=auto eol=lf
 *.ps1 text eol=crlf
 *.bat text eol=crlf
