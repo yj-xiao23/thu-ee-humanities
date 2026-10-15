@@ -11,6 +11,12 @@ test/*.png
 !test/preview-*.png
 test/preview-模板-*.png
 
+# —— 根目录的原始照片（哈希文件名）。经 tools/photos.ps1 压缩去元数据后
+#    输出到 assets/photos/ 的才是要发布的东西，原图留在本地做再处理用。 ——
+/*.jpg
+/*.jpeg
+/*.png
+
 # —— 编辑器 / 系统 ——
 .vscode/
 .idea/

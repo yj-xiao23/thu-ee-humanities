@@ -48,8 +48,34 @@ checks.forEach(([name, needle]) => {
   console.log('  ' + (ok ? '✔' : '✘') + ' ' + name + (needle === null ? ('（外链 ' + external + ' 个）') : ''));
 });
 
+/* ---------------- 自包含检查 ----------------
+   这一组是踩过坑之后加的：早先 build.js 只内联了 script.js，
+   paper.js / corpus.js 以 <script src="src/xxx.js"> 的形式留在产物里，
+   成品单独发给别人打开时 PaperLab / Corpus 会是 undefined，造词机与纸纹全废。
+   所以这里逐项断言"不需要任何外部文件"。 */
+console.log('\n自包含检查：');
+const selfChecks = [
+  ['无 src/ 外部引用', (t.match(/(?:src|href)="src\//g) || []).length === 0],
+  ['无任何本地文件引用', (t.match(/(?:src|href)="(?!data:|https?:|#|mailto:)[^"]+"/g) || []).length === 0],
+  ['三个脚本都已内联', (t.match(/\/\* ==== (?:paper|corpus|script)\.js ==== \*\//g) || []).length === 3],
+  ['样式表已内联', t.indexOf('<style>') >= 0 && t.indexOf('src/styles.css') < 0],
+  ['存在内联图片', (t.match(/src="data:image\//g) || []).length > 0],
+  ['纸张引擎代码在产物内', t.indexOf('PaperLab') >= 0 && t.indexOf('TEXTURE_LIST') >= 0],
+  ['语料库代码在产物内', t.indexOf('makeSentence') >= 0 && t.indexOf('POOLS') >= 0]
+];
+selfChecks.forEach(([name, ok]) => {
+  if (!ok) bad++;
+  console.log('  ' + (ok ? '✔' : '✘') + ' ' + name);
+});
+
+const imgCount = (t.match(/src="data:image\/jpeg;base64/g) || []).length;
+const imgBytes = (t.match(/data:image\/jpeg;base64,([A-Za-z0-9+/=]+)/g) || [])
+  .reduce((s, m) => s + Math.round(m.length * 0.75), 0);
+
 /* 顺手统计一下语料规模 */
 const Q = (t.match(/\{ t: '/g) || []).length;
 console.log('\n  名句条目约 ' + Q + ' 条');
-console.log(bad ? ('\n有 ' + bad + ' 项缺失 ✘') : '\n全部就位 ✔');
+console.log('  内联图片 ' + imgCount + ' 张，原始约 ' + (imgBytes / 1024).toFixed(0) + ' KB（base64 后约 ' +
+  ((Buffer.byteLength(t, 'utf8') - 0) / 1024).toFixed(0) + ' KB 总量）');
+console.log(bad ? ('\n有 ' + bad + ' 项缺失 ✘') : '\n全部就位 ✔（产物可脱离 src/ 独立打开）');
 process.exit(bad ? 1 : 0);

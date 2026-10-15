@@ -41,9 +41,8 @@
       <span class="hero__kicker">Tsinghua EE · 人文组</span>
       <h1 class="hero__title">把工科生的浪漫，<br><em>剪下来贴成诗</em>。</h1>
       <p class="hero__lead">
-        我们是清华大学电子工程系团委人文组。在理性与诗意之间，我们策划人文讲座、举办读书沙龙，
-        组织辩论赛事，倾听同窗故事，也走进社区，让人文关怀在交流与陪伴中落地。
-        欢迎了解我们的日常，也欢迎在拼贴诗工作台留下属于你的表达。
+        办人文讲座，办读书沙龙，组队打辩论，也走进社区陪孩子读书。
+        顺便做了下面这个拼贴诗工作台——把词剪开、重新贴起来，欢迎玩一张带走。
       </p>
       <div class="hero__meta">
         <span class="chip"><b>造词</b> 偏正 / 主谓 / 动宾 / 联合 …</span>
@@ -61,17 +60,16 @@
 
       <div class="intro-grid">
         <div class="card intro-card">
-          <h3>融合理性与诗意</h3>
+          <h3>科技为基，人文为翼</h3>
           <p>
-            人文组隶属于<b>清华大学电子工程系团委</b>。我们以讲座启迪思想，以阅读共享文字之美，
-            以辩论激荡思辨火花；搭建同学之间的沟通桥梁，在倾听与交流中传承清华精神，
-            为电子人的校园生活增添温度与情怀。
+            以讲座启迪思想，以阅读共享文字之美，以辩论激荡思辨火花；
+            也为电子人的校园生活，添一点温度与情怀。
           </p>
           <p>
             从清锋明辩的备赛现场，到社区里与孩子共读一本书，再到学生节舞台上的故事，
-            我们把思考、表达与行动连在一起，在共同创造中收获温暖、快乐与成长。
+            我们把思考、表达与行动连在一起。
           </p>
-          <div class="quote">一份温度，一份情怀。<br>融合理性与诗意。</div>
+          <div class="quote">科技为基，人文为翼。<br>文理交融，知行合一。</div>
         </div>
 
         <div class="card">
@@ -84,18 +82,11 @@
           </ul>
           <h3 style="margin:20px 0 10px">联系我们</h3>
           <ul class="fact-list">
-            <li><span class="k">招新</span><span class="v">待补充：招新群 / 报名方式</span></li>
-            <li><span class="k">日常</span><span class="v">待补充：BBS 版面 / 邮箱</span></li>
+            <li><span class="k">联系人</span><span class="v">肖岩钧</span></li>
+            <li><span class="k">邮箱</span><span class="v"><a class="link" href="mailto:yj-xiao23@mails.tsinghua.edu.cn">yj-xiao23@mails.tsinghua.edu.cn</a></span></li>
+            <li><span class="k">隶属</span><span class="v">清华大学电子工程系团委</span></li>
           </ul>
         </div>
-      </div>
-
-      <div class="placeholder-note">
-        <span>✏️</span>
-        <span>
-          <b>待补充联系方式：</b>上面「联系我们」里的招新群、BBS 版面与邮箱还是空的。
-          改 <code>src/index.html</code>，搜 <code>待补充</code> 就能定位。
-        </span>
       </div>
 
       <div class="sec-head" style="margin-top:32px">
@@ -122,6 +113,31 @@
           <div class="duty__tags"><span>剧本创作</span><span>全员排演</span><span>舞台协作</span></div>
         </article>
       </div>
+
+      <div class="sec-head" style="margin-top:44px">
+        <span class="sec-num">03 / GALLERY</span>
+        <h2>活动剪影</h2>
+        <span class="sec-note">点图片可放大</span>
+      </div>
+      <div class="photo-grid">
+        <figure class="photo">
+          <img src="assets/photos/group.jpg" alt="人文组全员合影" loading="lazy" decoding="async">
+          <figcaption>人文组全员合影</figcaption>
+        </figure>
+        <figure class="photo">
+          <img src="assets/photos/debate.jpg" alt="清锋明辩备赛" loading="lazy" decoding="async">
+          <figcaption>清锋明辩 · 备赛现场</figcaption>
+        </figure>
+        <figure class="photo">
+          <img src="assets/photos/meeting.jpg" alt="日常例会与读书沙龙" loading="lazy" decoding="async">
+          <figcaption>日常例会与读书沙龙</figcaption>
+        </figure>
+        <figure class="photo">
+          <img src="assets/photos/community.jpg" alt="社区共读活动" loading="lazy" decoding="async">
+          <figcaption>社区共读 · 与孩子一起读书</figcaption>
+        </figure>
+      </div>
+
       <p class="type-note" style="margin-top:20px">
         组织介绍根据团委招新推送中“人文组”相关内容整理。
         原文链接见项目 README。
@@ -413,10 +429,18 @@
 <footer class="site-foot">
   <div class="wrap">
     <span>© <span id="year">2025</span> 清华大学电子工程系团委 · 人文组</span>
-    <span>拼贴诗工作台 · 全部素材在浏览器本地处理</span>
-    <span>融合理性与诗意 · 在交流与行动中共同成长</span>
+    <span>导入的图片与生成的作品都在浏览器本地处理，不上传</span>
+    <span>文理交融，知行合一</span>
   </div>
 </footer>
+
+<!-- ============================ 图片放大 ============================ -->
+<figure class="lightbox" id="lightbox" hidden>
+  <div>
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCap"></figcaption>
+  </div>
+</figure>
 
 <!-- ============================ 导出弹窗 ============================ -->
 <div class="modal" id="modalExport" role="dialog" aria-modal="true" aria-labelledby="expTitleLabel">

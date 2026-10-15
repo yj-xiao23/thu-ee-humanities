@@ -275,6 +275,16 @@ body {
   padding-bottom: 2px;
 }
 .fact-list .v { color: var(--ink-soft); }
+/* 卡片里的链接：陶土色 + 细下划线，与页脚保持一致 */
+.fact-list .v .link,
+.fact-list .v a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  word-break: break-all;
+}
+.fact-list .v .link:hover,
+.fact-list .v a:hover { color: var(--accent-hi); }
 
 .duty-grid {
   margin-top: 20px;
@@ -938,6 +948,78 @@ body {
 .wm__custom { display: grid; gap: 0; }
 .wm .result-box { margin-top: 11px; }
 .wm .result-box:empty { display: none; }
+
+/* ============================ 活动剪影 ============================ */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* 照片做成"贴上去的相纸"：白框 + 细线 + 一截胶带，呼应拼贴主题 */
+.photo {
+  position: relative;
+  margin: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 7px 7px 0;
+  border-radius: 2px;
+  transition: border-color .18s;
+}
+.photo:hover { border-color: var(--ink-faint); }
+.photo img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  background: var(--paper-3);
+  cursor: zoom-in;
+}
+.photo figcaption {
+  padding: 9px 2px 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+/* 胶带：一半压在照片上、一半在外面 */
+.photo::before {
+  content: "";
+  position: absolute;
+  top: -9px; left: 50%;
+  width: 62px; height: 20px;
+  transform: translateX(-50%) rotate(-2.5deg);
+  background: rgba(226, 214, 178, .82);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+  pointer-events: none;
+}
+
+/* 点开看大图 */
+.lightbox {
+  position: fixed; inset: 0;
+  z-index: 950;
+  display: grid; place-items: center;
+  padding: 32px;
+  background: rgba(25, 24, 23, .82);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img {
+  max-width: min(1200px, 96vw);
+  max-height: 84vh;
+  border-radius: 3px;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .8);
+}
+.lightbox figcaption {
+  margin-top: 14px;
+  color: rgba(255, 255, 255, .78);
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .photo img { height: 150px; }
+}
 
 /* ============================ 弹窗 ============================ */
 

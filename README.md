@@ -34,13 +34,13 @@
 | `src/paper.js` | **纸张引擎**：噪波、纸纹生成（褶皱/折痕/纤维/旧纸/报纸/试卷/复写）、17 套背景模板、线条绘制 |
 | `src/corpus.js` | **语料库**：名句、高考论述类文本的术语与句式、句子池定义 |
 | `src/script.js` | 主逻辑：词库与句法引擎、拼贴板、剪字、质感、导出 |
-| `tools/build.js` | 打包脚本：把 src 四件套合成单文件，并同步到根目录 |
+| `tools/build.js` | 打包脚本：把 src 四件套 + 本地图片合成**自包含**单文件，并同步到根目录 |
 | `tools/serve.js` | 本地预览用的小服务器 |
 | `test/engine-test.js` | 造词引擎单测（Node 直接跑） |
 | `test/corpus-test.js` | 语料库单测：检查生成的论述句有没有连词叠用、标点问题、长度失控（Node 直接跑） |
 | `test/tex-calibrate.js` | 纸纹标定：量每种纸纹的亮度起伏，确认褶皱真的画出来了（Node 直接跑） |
 | `test/export-verify.js` | **导出视觉验证**：用最小 canvas 垫片跑一遍导出绘制，量像素起伏并输出一张真实 PNG（Node 直接跑，不需要浏览器） |
-| `test/bundle-check.js` | 成品结构自检：确认四个列表、语料池、纸纹/质感/导出等功能都进了单文件产物（Node 直接跑） |
+| `test/bundle-check.js` | 成品结构自检：功能是否都在产物里 + **自包含检查**（不许有任何指向本地文件的 src/href）（Node 直接跑） |
 | `test/test.html` + `test/harness.js` | 浏览器端全流程自检 |
 | `test/measure-tools.html` | 浮动工具条定位的几何测试 |
 | `test/tpl-gallery.html` | 17 套背景模板总览 |
@@ -64,7 +64,33 @@
 
 改完重新打包（见下）。
 
-### 2. 改词库
+### 2. 换活动照片
+
+照片放在 `assets/photos/`，页面在 `src/index.html` 里搜 `photo-grid`。四张的用途：
+
+| 文件 | 内容 |
+| --- | --- |
+| `group.jpg` | 人文组全员合影 |
+| `debate.jpg` | 清锋明辩备赛 |
+| `meeting.jpg` | 日常例会与读书沙龙 |
+| `community.jpg` | 社区共读 |
+
+**放新照片必须走这一步**，不要直接把手机原图丢进去：
+
+```powershell
+# 把原图（jpg）放项目根目录，改 tools/photos.ps1 顶部的 $map 对照表，然后：
+powershell -ExecutionPolicy Bypass -File tools/photos.ps1
+```
+
+脚本会：长边压到 1600px、JPEG 质量 82、**丢弃全部 EXIF**（手机照片常带 GPS 定位，
+公开页面绝对不能带着原图上线），输出到 `assets/photos/`。四张合计约 800 KB。
+
+> 根目录的原始照片已被 `.gitignore` 排除，只有 `assets/photos/` 里的成品会进仓库。
+
+**照片里如果有未成年的脸**（社区共读那张），发布前请确认已获得家长与社区同意。
+需要打码我可以处理。
+
+### 3. 改词库
 
 打开 `src/script.js`，找到 `const BANK = {`：
 
@@ -81,7 +107,7 @@ comp: [ ... ],                   // 动补结构的结果补语
 新词加进去就行，造词引擎会自动用上。想强调某个意象（比如"月亮"），
 在 `WEIGHT` 里给它一个更大的数字即可。
 
-### 3. 改句法结构
+### 4. 改句法结构
 
 同一文件里的 `const STRUCTS = [...]`。每个结构长这样：
 
@@ -101,7 +127,7 @@ comp: [ ... ],                   // 动补结构的结果补语
 
 加一行模板就等于加一种造句方式。
 
-### 4. 改语料库（四个列表的内容）
+### 5. 改语料库（四个列表的内容）
 
 打开 `src/corpus.js`：
 
@@ -132,7 +158,7 @@ comp: [ ... ],                   // 动补结构的结果补语
 
 改完跑 `node test/corpus-test.js 40` 看有没有出问题。
 
-### 5. 改背景模板与纸纹
+### 6. 改背景模板与纸纹
 
 `src/paper.js`：
 
@@ -141,7 +167,7 @@ comp: [ ... ],                   // 动补结构的结果补语
 - `TEX_CFG`：纸纹参数（`fbmAt` 控制褶皱疏密、`relief` 控制起伏强度、`base` 控制底色深浅）。想调褶皱的"大块/细密"，改 `fbmAt`。
 - 新增纸纹只要在 `TEX_CFG` 与 `TEXTURE_LIST` 里各加一项。
 
-### 6. 改质感预设
+### 7. 改质感预设
 
 `src/script.js` 里的 `FX_PRESETS`（干净 / 试卷 / 报纸 / 旧纸 / 揉皱了 / 牛皮纸 / 复写纸 / 墨迹重 / 干净纸纹）。
 每项是 `{ name, tex, fold, ink, palette }`，`tex` 取 `FX_TEX` 里的 key。加一项就多一个随机质感。

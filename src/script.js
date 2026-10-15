@@ -3097,6 +3097,38 @@
     $('#expDo').addEventListener('click', exportPNG);
   }
 
+  /* —— 活动剪影：点图放大 —— */
+  function bindLightbox() {
+    const box = $('#lightbox');
+    const img = $('#lightboxImg');
+    const cap = $('#lightboxCap');
+    if (!box || !img) return;
+
+    const close = () => { box.hidden = true; img.src = ''; };
+
+    $$('.photo').forEach((fig) => {
+      const im = fig.querySelector('img');
+      const fc = fig.querySelector('figcaption');
+      if (!im) return;
+      const open = () => {
+        img.src = im.currentSrc || im.src;
+        img.alt = im.alt || '';
+        if (cap) cap.textContent = fc ? fc.textContent : '';
+        box.hidden = false;
+      };
+      fig.addEventListener('click', open);
+      im.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+      im.tabIndex = 0;
+    });
+
+    box.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !box.hidden) close();
+    });
+  }
+
   function init() {
     window.__boot.init = true;
     /* ?reset=1 忽略本地草稿，从空板开始 */
@@ -3107,6 +3139,7 @@
     bindAssets();
     bindModals();
     bindFx();
+    bindLightbox();
     /* ?tpl=grid 直接指定背景模板（方便分享链接） */
     const tplQ = (location.search.match(/[?&]tpl=([a-z]+)/) || [])[1];
     if (tplQ && window.PaperLab && PaperLab.TPL_MAP[tplQ]) board.tpl = tplQ;
